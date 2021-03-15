@@ -123,7 +123,7 @@ def create_bought_together_recs():
             f"insert into bought_together_recs(product_id,rec_1,rec_2,rec_3,rec_4) values('{product_id}',{id_recs[0]},{id_recs[1]},{id_recs[2]},{id_recs[3]})"
         )
 
-
+        #commit every 2000 rows
         if count%2000 ==0:
             close_db_connection()
             open_db_connection()
@@ -170,7 +170,7 @@ def create_bought_together_recs_different_type():
             f"insert into bought_together_recs_different_type(product_id,rec_1,rec_2,rec_3,rec_4) values('{product_id}',{id_recs[0]},{id_recs[1]},{id_recs[2]},{id_recs[3]})"
         )
 
-
+        #commit every 2000 rows
         if count%2000 ==0:
             close_db_connection()
             open_db_connection()
