@@ -150,7 +150,7 @@ def create_bought_together_recs_different_type():
 
     rec_list = []
     for count, product_id in enumerate(id_list):
-        #using a subquery to fetch the 4 products most often bought together with product "product_id"
+        #using a subquery to fetch the 4 products most often bought together with product "product_id" that don't share the same sub_sub_category
         cursor.execute(
             f"select pio2.product_id ,count(pio2.product_id) as product_id_count, pc.sub_sub_category from product_in_order pio2 inner join product_categories pc on pc.product_id = pio2.product_id where session_id in (select session_id  from product_in_order pio  where product_id like '{product_id}') and sub_sub_category is not null and pio2.product_id not like '{product_id}' and pc.sub_sub_category not in (select sub_sub_category from product_categories pc2 where product_id like '{product_id}') group by pio2.product_id , pc.sub_sub_category order by product_id_count desc limit 4"
         )

@@ -13,7 +13,9 @@ al deze category tabellen worden gemaakt met de create_category_recs_table() fun
 Collaborative filtering:
 
 - Voor de aanbevelingen op producten maak ik een tabel met voor elk product 4 aanbevelingen. Ik kom aan deze aanbevelingen
-door te gaan kijken welke producten mensen het vaakst samen bestellen. d.m.v. een SQL query kan ik dus zien dat het id '1034'(Andrélon Shampoo Glans & Care 300 ml) x keer samen in 
+door voor elk product te kijken in welke bestellingen deze voorkomen, in bestellingen waar dit product voorkomt tel ik hoe vaak de andere producten voorkomen.
+Ik neem vervolgens de 4 meest voorkomende 'andere producten' in alle bestellingen als aanbeveling voor een specifiek product.
+Ik kan dus zien dat het id '1034'(Andrélon Shampoo Glans & Care 300 ml) x keer samen in 
 een bestelling zit met:
 
     74 x '2551'(Andrélon Glans & Care Conditioner 300 ml)
