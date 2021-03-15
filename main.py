@@ -84,7 +84,106 @@ def create_category_recs_table(category_type):
     close_db_connection()
 
 
-create_category_recs_table('category')
-create_category_recs_table('sub_category')
-create_category_recs_table('sub_sub_category')
+def create_bought_together_recs():
+    open_db_connection()
+
+    # create table
+    cursor.execute(
+        f"create table bought_together_recs(product_id varchar primary key, rec_1 varchar, rec_2 varchar, rec_3 varchar, rec_4 varchar)"
+    )
+
+    cursor.execute(
+        "select product_id from products"
+    )
+    data = cursor.fetchall()
+    id_list = []
+
+    #replacing ' with '' so LIKE in the sql statement doesn't fuck up
+    id_list = [id[0].replace("'", "''") for id in data]
+
+    rec_list = []
+    for count, product_id in enumerate(id_list):
+        #using a subquery to fetch the 4 products most often bought together with product "product_id"
+        cursor.execute(
+            f"select product_id ,count(product_id) as product_id_count from product_in_order pio2  where session_id in (select session_id  from product_in_order pio  where product_id like '{product_id}') and product_id not like '{product_id}' group by product_id  order by product_id_count desc limit 4"
+        )
+
+        data = cursor.fetchall()
+        id_recs = [x[0] for x in data]
+
+        for i in range(4 - (len(id_recs))):
+            id_recs.append('NULL')
+
+        for i in range(len(id_recs)):
+            if (id_recs[i] != 'NULL'):
+                id_recs[i] = f"'{id_recs[i]}'"
+
+        rec_list.append(id_recs)
+        cursor.execute(
+            f"insert into bought_together_recs(product_id,rec_1,rec_2,rec_3,rec_4) values('{product_id}',{id_recs[0]},{id_recs[1]},{id_recs[2]},{id_recs[3]})"
+        )
+
+
+        if count%2000 ==0:
+            close_db_connection()
+            open_db_connection()
+
+    close_db_connection()
+
+
+def create_bought_together_recs_different_type():
+    open_db_connection()
+
+    # create table
+    cursor.execute(
+        f"create table bought_together_recs_different_type(product_id varchar primary key, rec_1 varchar, rec_2 varchar, rec_3 varchar, rec_4 varchar)"
+    )
+
+    cursor.execute(
+        "select product_id from products"
+    )
+    data = cursor.fetchall()
+    id_list = []
+
+    #replacing ' with '' so LIKE in the sql statement doesn't fuck up
+    id_list = [id[0].replace("'", "''") for id in data]
+
+    rec_list = []
+    for count, product_id in enumerate(id_list):
+        #using a subquery to fetch the 4 products most often bought together with product "product_id"
+        cursor.execute(
+            f"select pio2.product_id ,count(pio2.product_id) as product_id_count, pc.sub_sub_category from product_in_order pio2 inner join product_categories pc on pc.product_id = pio2.product_id where session_id in (select session_id  from product_in_order pio  where product_id like '{product_id}') and sub_sub_category is not null and pio2.product_id not like '{product_id}' and pc.sub_sub_category not in (select sub_sub_category from product_categories pc2 where product_id like '{product_id}') group by pio2.product_id , pc.sub_sub_category order by product_id_count desc limit 4"
+        )
+
+        data = cursor.fetchall()
+        id_recs = [x[0] for x in data]
+
+        for i in range(4 - (len(id_recs))):
+            id_recs.append('NULL')
+
+        for i in range(len(id_recs)):
+            if (id_recs[i] != 'NULL'):
+                id_recs[i] = f"'{id_recs[i]}'"
+
+        rec_list.append(id_recs)
+        cursor.execute(
+            f"insert into bought_together_recs_different_type(product_id,rec_1,rec_2,rec_3,rec_4) values('{product_id}',{id_recs[0]},{id_recs[1]},{id_recs[2]},{id_recs[3]})"
+        )
+
+
+        if count%2000 ==0:
+            close_db_connection()
+            open_db_connection()
+
+    close_db_connection()
+
+
+
+#create_bought_together_recs()
+#create_bought_together_recs_different_type()
+#create_category_recs_table('category')
+#create_category_recs_table('sub_category')
+#create_category_recs_table('sub_sub_category')
+#there are no results for sub_sub_sub_category
+
 
