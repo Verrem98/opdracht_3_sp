@@ -7,7 +7,7 @@ met 4 aanbevelingen per product. De aanbevelingen zijn  producten met dezelfde s
  producten met dezelfde sub_sub_category aan te bevelen, deze zijn nu te specifiek(ik ben nu niet meer geïntresseerd in een ander soort shampoo),
   wat ik wel zou kunnen willen is een product in dezelfde sub_category of category, zoals douchegel of deo.
 
-al deze catagory tabellen worden gemaakt met de create_category_recs_table() functie
+al deze category tabellen worden gemaakt met de create_category_recs_table() functie
 
 
 Collaborative filtering:
