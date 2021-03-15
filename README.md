@@ -33,9 +33,8 @@ een bestelling zit met:
 - Als je op deze manier aanbevelingen wilt doen in je winkelwagen moet je wel iets veranderen, je wilt hier ook, net als bij content filtering, niet producten uit dezelfde sub_sub_category aanbevelen.
 de enige verandering is dus een subquery om die er uit te filteren.
 
-de functies zijn:
-create_bought_together_recs()
-create_bought_together_recs_different_type()
+de functie hiervoor:
+create_user_orders_rec(table_name)
 
  
     
