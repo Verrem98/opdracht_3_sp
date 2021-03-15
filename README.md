@@ -34,7 +34,7 @@ een bestelling zit met:
 de enige verandering is dus een subquery om die er uit te filteren.
 
 de functie hiervoor:
-create_user_orders_rec(table_name)
+create_user_orders_rec()
 
  
     
