@@ -1,3 +1,8 @@
+Ik gebruik dezelfde database die mijn groep in de vorige opdracht heeft gemaakt.
+https://github.com/Kaediin/Summatief_2_SP
+
+
+
 Content filtering:
 
 - Als ik op een product klik dan wil ik soortgelijke producten als aanbevelingen tonen, dit doe ik door de een tabel te maken
